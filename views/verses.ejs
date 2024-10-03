@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Memorized Verses</title>
+    <link rel="stylesheet" href="/styles.css"> <!-- Include static CSS -->
+</head>
+<body>
+    <h1>Your Quran Memorization Progress</h1>
+
+    <ul>
+        <% verses.forEach(verse => { %>
+            <li>
+                <strong>Chapter:</strong> <%= verse.chapter %>, <strong>Verse:</strong> <%= verse.verse %>
+                <br>
+                <strong>Text:</strong> <%= verse.text %>
+                <br>
+                <strong>Progress:</strong> <%= verse.progress %> % memorized
+                <br>
+
+                <!-- Delete form -->
+                <form action="/verses/<%= verse.id %>?_method=DELETE" method="POST">
+                    <button type="submit">Delete</button>
+                </form>
+
+                <!-- Update progress form -->
+                <form action="/verses/<%= verse.id %>?_method=PATCH" method="POST">
+                    <label for="progress">Update Progress (%):</label>
+                    <input type="number" name="progress" value="<%= verse.progress %>" min="0" max="100" required>
+                    <button type="submit">Update Progress</button>
+                </form>
+                <hr>
+            </li>
+        <% }); %>
+    </ul>
+
+    <!-- Link to go back to the main page -->
+    <a href="/">Add More Verses</a>
+</body>
+</html>

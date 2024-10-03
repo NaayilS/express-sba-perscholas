@@ -1,58 +1,12 @@
-let verses = [];  // Data structure to store verses (Satisfies reasonable data structuring practices)
+const express = require('express');
+const { getVerses, addVerse, updateVerse, deleteVerse, filterVerses } = require('../controllers/verseController');
+const router = express.Router();
 
-// POST route to add a verse
-app.post('/verses', (req, res) => {
-    const { chapter, verse, text } = req.body;
-    const newVerse = {
-        id: Date.now(),
-        chapter,
-        verse,
-        text,
-        progress: 0 // Initial memorization progress set to 0
-    };
-    verses.push(newVerse);
-    res.redirect('/');
-});
+// Routes for verses
+router.get('/', getVerses);
+router.post('/', addVerse);
+router.patch('/:id', updateVerse);
+router.delete('/:id', deleteVerse);
+router.get('/filter', filterVerses);
 
-// GET route to display all verses
-app.get('/verses', (req, res) => {
-    res.render('verses', { verses });
-});
-
-// PATCH route to update verse progress
-app.patch('/verses/:id', (req, res) => {
-    const { id } = req.params;
-    const { progress } = req.body;
-    const verse = verses.find(v => v.id == id);
-    if (verse) {
-        verse.progress = progress;
-        res.status(200).send('Progress updated');
-    } else {
-        res.status(404).send('Verse not found');
-    }
-});
-
-// DELETE route to remove a verse
-app.delete('/verses/:id', (req, res) => {
-    const { id } = req.params;
-    verses = verses.filter(v => v.id != id);
-    res.status(200).send('Verse deleted');
-});
-
-// GET route for filtering verses by chapter or verse length
-app.get('/filter', (req, res) => {
-    const { chapter, length } = req.query;
-    let filteredVerses = verses;
-
-    // Filter by chapter
-    if (chapter) {
-        filteredVerses = filteredVerses.filter(verse => verse.chapter === chapter);
-    }
-
-    // Filter by verse length (checking if the verse text length is greater than or equal to the provided length)
-    if (length) {
-        filteredVerses = filteredVerses.filter(verse => verse.text.length >= length);
-    }
-
-    res.render('verses', { verses: filteredVerses });
-});
+module.exports = router;
