@@ -18,3 +18,24 @@ app.post('/verses', (req, res) => {
 app.get('/verses', (req, res) => {
     res.render('verses', { verses });
 });
+
+// PATCH route to update verse progress
+app.patch('/verses/:id', (req, res) => {
+    const { id } = req.params;
+    const { progress } = req.body;
+    const verse = verses.find(v => v.id == id);
+    if (verse) {
+        verse.progress = progress;
+        res.status(200).send('Progress updated');
+    } else {
+        res.status(404).send('Verse not found');
+    }
+});
+
+// DELETE route to remove a verse
+app.delete('/verses/:id', (req, res) => {
+    const { id } = req.params;
+    verses = verses.filter(v => v.id != id);
+    res.status(200).send('Verse deleted');
+});
+
