@@ -21,5 +21,17 @@
 
         <button type="submit">Add Verse</button>
     </form> <!--Satisfies form within rendered view requirement-->
+
+<h2>Filter Your Verses</h2>
+<form action="/filter" method="GET">
+    <label for="chapter">Filter by Chapter:</label>
+    <input type="text" name="chapter">
+
+    <label for="length">Filter by Verse Length (characters):</label>
+    <input type="number" name="length">
+
+    <button type="submit">Apply Filters</button>
+</form>
+
 </body>
 </html>
