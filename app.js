@@ -1,20 +1,16 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const methodOverride = require('method-override');
+const verseRoutes = require('./routes/verseRoutes');
 const app = express();
 
-app.set('view engine', 'ejs');  // Using EJS as the view template engine (Satisfies the "view engine" requirement)
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static('public')); // Serving static file (CSS)
+// Set the view engine to EJS
+app.set('view engine', 'ejs');
 
-// Basic routes setup
-app.get('/', (req, res) => {
-    res.render('index', { title: 'Quran Memorization App' });
-});
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+// Middleware
+app.use(bodyParser.urlencoded({ extended: true }));  // Parse form data
+app.use(express.static('public'));  // Serve static files (CSS)
+app.use(methodOverride('_method'));  // Allow PATCH and DELETE methods via POST forms
 
 // Custom middleware to log requests
 app.use((req, res, next) => {
@@ -22,8 +18,15 @@ app.use((req, res, next) => {
     next();
 });
 
-// Error-handling middleware
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).send('Something broke!');
+// Use verse routes
+app.use('/verses', verseRoutes);
+
+// Route for the home page
+app.get('/', (req, res) => {
+    res.render('index', { title: 'Quran Memorization App' });
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });
