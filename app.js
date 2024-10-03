@@ -1,30 +1,26 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
-const verseRoutes = require('./routes/verseRoutes');
+const { renderHomePage, addVerse, getVerses } = require('./controllers/verseController');
+
 const app = express();
 
-// Set the view engine to EJS
+// Set view engine to EJS
 app.set('view engine', 'ejs');
 
 // Middleware
-app.use(bodyParser.urlencoded({ extended: true }));  // Parse form data
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(methodOverride('_method'));
 app.use(express.static('public'));  // Serve static files (CSS)
-app.use(methodOverride('_method'));  // Allow PATCH and DELETE methods via POST forms
 
-// Custom middleware to log requests
-app.use((req, res, next) => {
-    console.log(`${req.method} ${req.url}`);
-    next();
-});
+// Route for homepage
+app.get('/', renderHomePage);
 
-// Use verse routes
-app.use('/verses', verseRoutes);
+// Route to handle adding a new verse
+app.post('/verses', addVerse);
 
-// Route for the home page
-app.get('/', (req, res) => {
-    res.render('index', { title: 'Quran Memorization App' });
-});
+// Route to display memorized verses on a separate page
+app.get('/verses', getVerses);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

@@ -11,6 +11,8 @@ let verses = [
     { id: 9, chapter: 'Yaseen', verse: '58', text: 'Peace, a word from a Merciful Lord.', progress: 40 },
     { id: 10, chapter: 'Al-Ikhlas', verse: '2', text: 'Allah, the Eternal Refuge.', progress: 25 },
 ];
+
+
 // Controller to get all verses
 const getVerses = (req, res) => {
     res.render('verses', { verses });

@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= title %></title>
+    <title>Quran Memorization></title>
     <link rel="stylesheet" href="/styles.css"> <!-- Include static CSS -->
 </head>
 <body>
+    <div class="container">
     <h1>Welcome to the Quran Memorization App</h1>
 
     <form action="/verses" method="POST">
@@ -35,6 +36,7 @@
     </form>
 
     <!-- Link to view all verses -->
-    <a href="/views/verses.ejs">View Memorized Verses</a>
+    <a href="/verses">View Memorized Verses</a>
+    
 </body>
 </html>
