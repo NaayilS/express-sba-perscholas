@@ -39,3 +39,20 @@ app.delete('/verses/:id', (req, res) => {
     res.status(200).send('Verse deleted');
 });
 
+// GET route for filtering verses by chapter or verse length
+app.get('/filter', (req, res) => {
+    const { chapter, length } = req.query;
+    let filteredVerses = verses;
+
+    // Filter by chapter
+    if (chapter) {
+        filteredVerses = filteredVerses.filter(verse => verse.chapter === chapter);
+    }
+
+    // Filter by verse length (checking if the verse text length is greater than or equal to the provided length)
+    if (length) {
+        filteredVerses = filteredVerses.filter(verse => verse.text.length >= length);
+    }
+
+    res.render('verses', { verses: filteredVerses });
+});
