@@ -1,0 +1,25 @@
+<!-- views/index.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quran Memorization</title>
+    <link rel="stylesheet" href="/styles.css">  <!-- Static CSS -->
+</head>
+<body>
+    <h1>Welcome to the Quran Memorization App</h1>
+    <form action="/verses" method="POST">
+        <label for="chapter">Chapter:</label>
+        <input type="text" name="chapter" required>
+
+        <label for="verse">Verse:</label>
+        <input type="text" name="verse" required>
+
+        <label for="text">Verse Text:</label>
+        <textarea name="text" required></textarea>
+
+        <button type="submit">Add Verse</button>
+    </form> <!--Satisfies form within rendered view requirement-->
+</body>
+</html>
