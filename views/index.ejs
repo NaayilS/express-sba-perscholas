@@ -1,14 +1,14 @@
-<!-- views/index.ejs -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quran Memorization</title>
-    <link rel="stylesheet" href="/styles.css">  <!-- Static CSS -->
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/styles.css"> <!-- Include static CSS -->
 </head>
 <body>
     <h1>Welcome to the Quran Memorization App</h1>
+
     <form action="/verses" method="POST">
         <label for="chapter">Chapter:</label>
         <input type="text" name="chapter" required>
@@ -20,18 +20,21 @@
         <textarea name="text" required></textarea>
 
         <button type="submit">Add Verse</button>
-    </form> <!--Satisfies form within rendered view requirement-->
+    </form>
 
-<h2>Filter Your Verses</h2>
-<form action="/filter" method="GET">
-    <label for="chapter">Filter by Chapter:</label>
-    <input type="text" name="chapter">
+    <!-- Filtering form -->
+    <h2>Filter Your Verses</h2>
+    <form action="/verses/filter" method="GET">
+        <label for="chapter">Filter by Chapter:</label>
+        <input type="text" name="chapter">
 
-    <label for="length">Filter by Verse Length (characters):</label>
-    <input type="number" name="length">
+        <label for="length">Filter by Verse Length (characters):</label>
+        <input type="number" name="length">
 
-    <button type="submit">Apply Filters</button>
-</form>
+        <button type="submit">Apply Filters</button>
+    </form>
 
+    <!-- Link to view all verses -->
+    <a href="/views/verses.ejs">View Memorized Verses</a>
 </body>
 </html>
